@@ -3,7 +3,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - dev-app
 on:
   push:
     branches:
-      - dev
+      - master
   workflow_dispatch:
 
 jobs:
@@ -48,9 +48,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EA1CFBAF991D4E64ACDBEBF32DC26B52 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_28B05CB10B8245D18E2C2C2C3DDCC070 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B2A10A9AF4754E37A35FECF46F419D11 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4FD4D1D4A7A140889556083718E207C1 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_486F72AE3D94456C9BE0A03669B88820 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F8CE7043E7134AA8B0E340741825F3EE }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
