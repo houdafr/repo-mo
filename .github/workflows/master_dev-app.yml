@@ -3,7 +3,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - dev-app
 on:
   push:
     branches:
-      - master
+      - dev
   workflow_dispatch:
 
 jobs:
@@ -18,14 +18,11 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: List files in current directory
-        run: dir
-
       - name: Build with dotnet
-        run: dotnet build MyApp/MyApp.csproj --configuration Release
+        run: dotnet build ./MyApp/MyApp.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish MyApp/MyApp.csproj -c Release -o ./myapp
+        run: dotnet publish ./MyApp/MyApp.csproj -c Release -o ./myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -37,7 +34,7 @@ jobs:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'Production'
+      name: 'pprod'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -51,14 +48,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4FD4D1D4A7A140889556083718E207C1 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_486F72AE3D94456C9BE0A03669B88820 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F8CE7043E7134AA8B0E340741825F3EE }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_EA1CFBAF991D4E64ACDBEBF32DC26B52 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_28B05CB10B8245D18E2C2C2C3DDCC070 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_B2A10A9AF4754E37A35FECF46F419D11 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'dev-app'
-          slot-name: 'Production'
+          slot-name: 'pprod'
           package: .
