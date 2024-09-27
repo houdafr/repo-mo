@@ -18,6 +18,9 @@ jobs:
         with:
           dotnet-version: '8.x'
 
+      - name: List files in current directory
+        run: dir
+
       - name: Build with dotnet
         run: dotnet build ./MyApp/MyApp.csproj --configuration Release
 
@@ -29,12 +32,11 @@ jobs:
         with:
           name: .net-app
           path: ./myapp
-
   deploy:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'pprod'
+      name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -57,5 +59,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'dev-app'
-          slot-name: 'pprod'
+          slot-name: 'Production'
           package: .
