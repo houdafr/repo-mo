@@ -22,10 +22,10 @@ jobs:
         run: dir
 
       - name: Build with dotnet
-        run: dotnet build path/to/your/MyApp.csproj --configuration Release
+        run: dotnet build MyApp/MyApp.csproj --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish path/to/your/MyApp.csproj -c Release -o ./myapp
+        run: dotnet publish MyApp/MyApp.csproj -c Release -o ./myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
