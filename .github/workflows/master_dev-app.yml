@@ -18,20 +18,18 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: List files in current directory
-        run: dir
-
       - name: Build with dotnet
-        run: dotnet build ./MyApp/MyApp.csproj --configuration Release
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish ./MyApp/MyApp.csproj -c Release -o ./myapp
+        run: dotnet publish -c Release -o ./myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
           path: ./myapp
+
   deploy:
     runs-on: windows-latest
     needs: build
@@ -39,7 +37,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -61,3 +59,4 @@ jobs:
           app-name: 'dev-app'
           slot-name: 'Production'
           package: .
+          
